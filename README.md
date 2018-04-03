@@ -17,7 +17,7 @@ Requires PHP 5.5 or newer and `php-tokenizer` (a default PHP extension).
 
 1. To manually install Sourcegraph view our [documentation](https://about.sourcegraph.com/docs/features/phabricator-extension)
 
-## Uninstall
+## [Uninstall](https://about.sourcegraph.com/docs/features/phabricator-extension#uninstall)
 
 1. To uninstall Sourcegraph on your Phabricator instance run `./uninstall.sh <path/to/phabricator/root>` inside your Phabricator instance.
 2. Restart Phabricator instance.
