@@ -21,7 +21,7 @@ if ! php -m | grep -lq 'tokenizer'; then
 			exit 1
 		fi
 	else
-		echo "php-tokenizer is required for installation. See https://about.sourcegraph.com/docs/features/phabricator-extension#organization-wide-installation for more information."
+		echo "php-tokenizer is a required dependency to automatically uninstall Sourcegraph. See https://about.sourcegraph.com/docs/features/phabricator-extension#organization-wide-installation for more information."
 	fi
 fi
 
@@ -29,8 +29,7 @@ echo "Uninstalling Sourcegraph Phabricator integration"
 echo ""
 ./scripts/modify-controller.php "rm" $1
 
-./bin/celerity map
-popd
+"$1/bin/celerity" map
 
 echo "Success!"
 echo ""
