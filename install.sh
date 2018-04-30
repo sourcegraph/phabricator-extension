@@ -2,8 +2,8 @@
 
 set -e
 
-if [ -z "$1" ] || [ -z "$2" ]; then
-	echo "Usage: ./install.sh /path/to/phabricator/root https://sourcegraph.mycompany.com"
+if [ -z "$1" ] || [ -n "$2" ]; then
+	echo "Usage: ./install.sh /path/to/phabricator/root"
 	exit 1
 fi
 
@@ -30,12 +30,14 @@ echo ""
 ./scripts/modify-controller.php $1 $2
 
 cp ./loader.js /tmp/loader.js
-echo -e "/**\n* @provides sourcegraph\n*/\n\nwindow.SOURCEGRAPH_PHABRICATOR_EXTENSION = true;\nwindow.SOURCEGRAPH_URL = '$(echo $2)';\n" >/tmp/base.js
+echo -e "/**\n* @provides sourcegraph\n*/\n\nwindow.SOURCEGRAPH_PHABRICATOR_EXTENSION = true;\n" >/tmp/base.js
 
 cd $1
 mkdir -p ./webroot/rsrc/js/sourcegraph
 cat /tmp/base.js /tmp/loader.js >./webroot/rsrc/js/sourcegraph/sourcegraph.js
 ./bin/celerity map
+
+cp -R ./src $1/src/extensions/sourcegraph
 
 echo "Success!"
 echo ""
