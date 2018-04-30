@@ -10,11 +10,10 @@ fi
 cp ./loader.js /tmp/loader.js
 echo -e "/**\n* @provides sourcegraph\n*/\n\nwindow.SOURCEGRAPH_PHABRICATOR_EXTENSION = true;\nwindow.SOURCEGRAPH_URL = '$(echo $2)';\n" >/tmp/base.js
 
-pushd $1
+cd $1
 mkdir -p ./webroot/rsrc/js/sourcegraph
 cat /tmp/base.js /tmp/loader.js >./webroot/rsrc/js/sourcegraph/sourcegraph.js
 ./bin/celerity map
-popd
 
 echo "Success!"
 echo ""
