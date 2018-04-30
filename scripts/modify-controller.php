@@ -23,10 +23,12 @@ $root = dirname(dirname(dirname(__FILE__))) . '/phabricator-extension-install';
 require $root . '/vendor/autoload.php';
 
 use PhpParser\Error;
+use PhpParser\Lexer;
 use PhpParser\Node;
+use PhpParser\NodeVisitor;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitorAbstract;
-use PhpParser\ParserFactory;
+use PhpParser\Parser;
 use PhpParser\PrettyPrinter;
 
 $codePath = realpath($phabRoot . '/src/applications/base/controller/PhabricatorController.php');
@@ -40,14 +42,6 @@ $usage";
 }
 
 $code = file_get_contents($codePath);
-
-$parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP5);
-try {
-    $ast = $parser->parse($code);
-} catch (Error $error) {
-    echo "Parse error: {$error->getMessage()}\n";
-    return;
-}
 
 class SourcegraphNodeVisitor extends NodeVisitorAbstract
 {
@@ -82,7 +76,7 @@ class SourcegraphNodeVisitor extends NodeVisitorAbstract
             if (!$hasSourcegraph && $this->shouldAdd) {
                 $nameNode = new Node\Name('require_celerity_resource');
                 $argNode = new Node\Arg(new Node\Scalar\String_('sourcegraph'));
-                $newFuncCall = new Node\Expr\FuncCall($nameNode, array($argNode));
+                $newFuncCall = new Node\Stmt\Expression(new Node\Expr\FuncCall($nameNode, array($argNode)));
                 $stmts = array_merge(array($newFuncCall), $node->getStmts());
                 $node->stmts = $stmts;
                 return $node;
@@ -91,12 +85,33 @@ class SourcegraphNodeVisitor extends NodeVisitorAbstract
     }
 }
 
-$traverser = new NodeTraverser;
-$traverser->addVisitor(new SourcegraphNodeVisitor($isInstallationScript));
-$mod = $traverser->traverse($ast);
-$prettyPrinter = new PrettyPrinter\Standard();
-$out = $prettyPrinter->prettyPrintFile($mod);
+$lexer = new Lexer\Emulative([
+    'usedAttributes' => [
+        'comments',
+        'startLine', 'endLine',
+        'startTokenPos', 'endTokenPos',
+    ],
+]);
+$parser = new Parser\Php7($lexer);
 
-file_put_contents($codePath, $out);
+$traverser = new NodeTraverser();
+$traverser->addVisitor(new NodeVisitor\CloningVisitor());
+$traverser->addVisitor(new SourcegraphNodeVisitor($isInstallationScript));
+
+$printer = new PrettyPrinter\Standard();
+
+try {
+    $oldStmts = $parser->parse($code);
+} catch (Error $error) {
+    echo "Parse error: {$error->getMessage()}\n";
+    return;
+}
+$oldTokens = $lexer->getTokens();
+
+$newStmts = $traverser->traverse($oldStmts);
+
+$newCode = $printer->printFormatPreserving($newStmts, $oldStmts, $oldTokens);
+
+file_put_contents($codePath, $newCode);
 
 ?>
