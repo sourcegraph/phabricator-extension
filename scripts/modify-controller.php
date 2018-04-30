@@ -49,7 +49,7 @@ try {
     return;
 }
 
-class SourcegraphNodeVistor extends NodeVisitorAbstract
+class SourcegraphNodeVisitor extends NodeVisitorAbstract
 {
     private $shouldAdd;
 
@@ -92,7 +92,7 @@ class SourcegraphNodeVistor extends NodeVisitorAbstract
 }
 
 $traverser = new NodeTraverser;
-$traverser->addVisitor(new SourcegraphNodeVistor($isInstallationScript));
+$traverser->addVisitor(new SourcegraphNodeVisitor($isInstallationScript));
 $mod = $traverser->traverse($ast);
 $prettyPrinter = new PrettyPrinter\Standard();
 $out = $prettyPrinter->prettyPrintFile($mod);
