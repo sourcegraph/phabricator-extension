@@ -24,6 +24,7 @@ function getPhabricatorUsername() {
     }
     return match[1];
   }
+  console.warn('Unable to getPhabricatorUsername from DOM.');
   return null;
 }
 
@@ -51,12 +52,9 @@ if (userWhitelist) {
     load();
   }
 } else {
-
   if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    // document is already ready to go
     load();
   } else {
     document.addEventListener('DOMContentLoaded', load);
   }
-  // Unconditionally load the extension.
 }

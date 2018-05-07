@@ -26,10 +26,8 @@ final class SourcegraphConduitAPIMethod extends PhabricatorAuthConduitAPIMethod
     protected function execute(ConduitAPIRequest $request)
     {
         $url = PhabricatorEnv::getEnvConfig('sourcegraph.url');
-        $accessToken = PhabricatorEnv::getEnvConfig('sourcegraph.accessToken');
         $results = array(
             'url' => $url,
-            'accessToken' => $accessToken,
         );
 
         return $results;

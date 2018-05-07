@@ -14,7 +14,7 @@ final class PhabricatorSourcegraphConfigOptions extends PhabricatorApplicationCo
 
     public function getIcon()
     {
-        return 'fa-cog';
+        return 'fa-asterisk';
     }
 
     public function getGroup()
@@ -28,13 +28,9 @@ final class PhabricatorSourcegraphConfigOptions extends PhabricatorApplicationCo
             $this->newOption(
                 'sourcegraph.url',
                 'string',
-                'http://localhost:3080')
-                ->setDescription(pht('Full URL for the Sourcegraph server.')),
-            $this->newOption(
-                'sourcegraph.accessToken',
-                'string',
-                '')
-                ->setDescription(pht('Global access token (optional)')),
+                null)
+                ->setDescription(pht('URL to Sourcegraph.'))
+                ->addExample('https://sourcegraph.example.com', pht('Valid Setting')),
         );
    }
 }

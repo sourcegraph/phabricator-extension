@@ -18,6 +18,8 @@ final class SourcegraphApplication extends PhabricatorApplication
         $url = rtrim(PhabricatorEnv::getEnvConfig('sourcegraph.url'), '/');
         $bundleUrl = $url . '/.assets/extension/scripts/phabricator.bundle.js';
 
+        // In order to load the Sourcegraph Phabricator bundle and to fetch content from a Sourcegraph Server
+        // instance, the CSP policy must include the Sourcegraph Server instance url.
         CelerityAPI::getStaticResourceResponse()
             ->addContentSecurityPolicyURI('connect-src', $url)
             ->addContentSecurityPolicyURI('script-src', $url);
