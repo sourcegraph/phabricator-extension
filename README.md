@@ -1,4 +1,4 @@
-# Sourcegraph extension for Phabricator
+# Sourcegraph's Phabricator integration
 
 Get code intelligence on Phabricator with Sourcegraph.
 
@@ -6,25 +6,47 @@ Check out our [docs site](https://about.sourcegraph.com/docs/features/phabricato
 
 ## [Installation](https://https://about.sourcegraph.com/docs/features/phabricator-extension#option-a-single-installation-script)
 
-1. To install Sourcegraph on your Phabricator instance run `./install.sh <path/to/phabricator/root> <sourcegraph url>` inside your Phabricator instance.
-2. Restart Phabricator instance.
+1. Clone this repository into a sourcegraph folder located in your Phabricator extension directory.
 
-Requires PHP 5.5 or newer and `php-tokenizer` (a default PHP extension).
+```
+git clone -b v1.0 git@github.com:sourcegraph/phabricator-extension-install.git path/to/phabricator/src/extensions/sourcegraph
+```
 
-*You may delete this repository after installation*
+2. Regnerate your dependencies and packaging maps with `./bin/celerity map`. See [how to regenerate static resources](https://secure.phabricator.com/book/phabdev/article/celerity/).
 
-## [Manual Installation](https://about.sourcegraph.com/docs/features/phabricator-extension#option-b-manual-installation)
+3. [Restart Phabricator](https://secure.phabricator.com/book/phabricator/article/restarting/).
 
-1. To manually install Sourcegraph view our [documentation](https://about.sourcegraph.com/docs/features/phabricator-extension)
+## Quickstart
 
-## [Uninstall](https://about.sourcegraph.com/docs/features/phabricator-extension#uninstall)
+Sourcegraph's Phabricator integration adds Sourcegraph code intelligence and search to Phabricator diffs and code files, so you get go-to-definition, find-references, hover tooltips, and code search embedded natively into Phabricator.
 
-1. To uninstall Sourcegraph on your Phabricator instance run `./uninstall.sh <path/to/phabricator/root>` inside your Phabricator instance.
-2. Restart Phabricator instance.
+1. [Update your Sourcegraph site configuration](https://about.sourcegraph.com/docs/config/) to allow scripts on your Phabricator instance to communicate with your Sourcegraph instance:
 
-## Requirements
+```
+{
+   // ...
+   "corsOrigin": "$PHABRICATOR_URL"
+   // ...
+}
+```
 
-The installation script requires PHP 5.5 or newer and `php-tokenizer` (a default PHP extension).
+2. Update the `sourcegraph.url` configuration value to the URL where your Sourcegraph instance is hosted via the Phabricator UI or via the command line.
 
-If you installed Phabricator using [RedpointGames/phabricator](https://github.com/RedpointGames/phabricator)
-Docker command your instance will not have the default extension enabled. The installation script will prompt you to install.
+```
+./bin/config set sourcegraph.url https://sourcegraph.example.com
+```
+
+## [Full Documentation](https://about.sourcegraph.com/docs/features/phabricator-extension)
+
+Additional configuration details and troubleshooting is located in our [full documentation](https://about.sourcegraph.com/docs/features/phabricator-extension).
+
+## Reporting Issues
+
+We welcome all types of feedback, including:
+
+* Bug reports
+* Questions about the product
+* Feature requests
+* General feedback
+
+Let us know all the things you like, don't like, and would like to see!
