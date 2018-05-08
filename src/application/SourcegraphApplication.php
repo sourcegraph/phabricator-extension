@@ -8,6 +8,11 @@ final class SourcegraphApplication extends PhabricatorApplication
         return pht('Sourcegraph');
     }
 
+    public function getShortDescription()
+    {
+        return pht('Code Intelligence and Search');
+    }
+
     public function getRoutes()
     {
         return array();
