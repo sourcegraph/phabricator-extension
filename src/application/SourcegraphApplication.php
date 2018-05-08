@@ -22,6 +22,7 @@ final class SourcegraphApplication extends PhabricatorApplication
     {
         $url = rtrim(PhabricatorEnv::getEnvConfig('sourcegraph.url'), '/');
         $bundleUrl = $url . '/.assets/extension/scripts/phabricator.bundle.js';
+        $repos = PhabricatorEnv::getEnvConfig('sourcegraph.repos');
 
         // In order to load the Sourcegraph Phabricator bundle and to fetch content from a Sourcegraph Server
         // instance, the CSP policy must include the Sourcegraph Server instance url.
@@ -32,6 +33,7 @@ final class SourcegraphApplication extends PhabricatorApplication
         Javelin::initBehavior('sourcegraph-config', array(
             'bundleUrl' => $bundleUrl,
             'url' => $url,
+            'repos' => $repos
         ), 'sourcegraph');
         require_celerity_resource('sourcegraph', 'sourcegraph');
     }

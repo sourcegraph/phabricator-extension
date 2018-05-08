@@ -11,4 +11,8 @@ JX.behavior('sourcegraph-config', function(config) {
 			window.SOURCEGRAPH_BUNDLE_URL = config.bundleUrl;
 			window.localStorage.SOURCEGRAPH_BUNDLE_URL = config.bundleUrl;
 	}
+	if (config.repos) {
+		window.PHABRICATOR_REPOS = JSON.stringify(config.repos);
+		window.localStorage.PHABRICATOR_REPOS = JSON.stringify(config.repos);
+	}
 });
