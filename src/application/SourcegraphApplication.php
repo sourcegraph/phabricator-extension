@@ -20,6 +20,10 @@ final class SourcegraphApplication extends PhabricatorApplication
 
     public function __construct()
     {
+        $url = PhabricatorEnv::getEnvConfig('sourcegraph.url');
+        if (!isset($url) || trim($url) === '') {
+            return;
+        }
         $url = rtrim(PhabricatorEnv::getEnvConfig('sourcegraph.url'), '/');
         $bundleUrl = $url . '/.assets/extension/scripts/phabricator.bundle.js';
         $callsignMappings = PhabricatorEnv::getEnvConfig('sourcegraph.callsignMappings');
