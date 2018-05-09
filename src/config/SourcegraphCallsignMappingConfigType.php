@@ -1,9 +1,9 @@
 <?php
 
-final class SourcegraphRepoConfigType extends PhabricatorJSONConfigType
+final class SourcegraphCallsignMappingConfigType extends PhabricatorJSONConfigType
 {
 
-    const TYPEKEY = 'sourcegraph.repo';
+    const TYPEKEY = 'sourcegraph.callsignMapping';
 
     public function validateStoredValue(
         PhabricatorConfigOption $option,
@@ -12,8 +12,8 @@ final class SourcegraphRepoConfigType extends PhabricatorJSONConfigType
             if (!is_array($spec)) {
                 throw $this->newException(
                     pht(
-                        'Sourcegraph repository configuration is not valid: each entry in ' .
-                        'the list must be a dictionary describing a repository, but ' .
+                        'Sourcegraph callsign mapping configuration is not valid: each entry in ' .
+                        'the list must be a dictionary describing a callsign mapping, but ' .
                         'the value with index "%s" is not a dictionary.',
                         $index));
             }
@@ -29,7 +29,7 @@ final class SourcegraphRepoConfigType extends PhabricatorJSONConfigType
             } catch (Exception $ex) {
               throw $this->newException(
                 pht(
-                  'Sourcegraph repositority configuration has an invalid repository '.
+                  'Sourcegraph callsign mapping configuration has an invalid mapping '.
                   'specification (at index "%s"): %s.',
                   $index,
                   $ex->getMessage()));

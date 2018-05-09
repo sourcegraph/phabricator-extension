@@ -12,6 +12,7 @@ phutil_register_library_map(array(
     'CeleritySourcegraphResources' => 'celerity/CeleritySourcegraphResources.php',
     'PhabricatorSourcegraphConfigOptions' => 'config/SourcegraphConfigOptions.php',
     'SourcegraphApplication' => 'application/SourcegraphApplication.php',
+    'SourcegraphCallsignMappingConfigType' => 'config/SourcegraphCallsignMappingConfigType.php',
     'SourcegraphConduitAPIMethod' => 'conduit/SourcegraphConduitAPI.php',
   ),
   'function' => array(),
@@ -19,6 +20,7 @@ phutil_register_library_map(array(
     'CeleritySourcegraphResources' => 'CelerityResourcesOnDisk',
     'PhabricatorSourcegraphConfigOptions' => 'PhabricatorApplicationConfigOptions',
     'SourcegraphApplication' => 'PhabricatorApplication',
+    'SourcegraphCallsignMappingConfigType' => 'PhabricatorJSONConfigType',
     'SourcegraphConduitAPIMethod' => 'PhabricatorAuthConduitAPIMethod',
   ),
 ));

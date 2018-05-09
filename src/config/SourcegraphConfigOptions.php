@@ -24,16 +24,7 @@ final class PhabricatorSourcegraphConfigOptions extends PhabricatorApplicationCo
 
     public function getOptions()
     {
-        $repo_type = 'sourcegraph.repo';
-        $repo_example = array(
-            array(
-                'path' => 'gorilla/mux',
-                'callsign' => 'MUX',
-            ),
-        );
-
-        $repo_example = id(new PhutilJSON())->encodeAsList(
-            $repo_example);
+        $callsign_mapping_type = 'sourcegraph.callsignMapping';
 
         return array(
             $this->newOption(
@@ -42,18 +33,26 @@ final class PhabricatorSourcegraphConfigOptions extends PhabricatorApplicationCo
                 null)
                 ->setDescription(pht('URL to Sourcegraph.'))
                 ->addExample('https://sourcegraph.example.com', pht('Valid Setting')),
-            $this->newOption('sourcegraph.repos', $repo_type, array())
+            $this->newOption('sourcegraph.callsignMappings', $callsign_mapping_type, array())
                 ->setDescription(pht(
-                    'This option is only required for repositories defined in `%s` array found in your Sourcegraph site admin configuration.' .
+                    'f your Phabricator installation mirrors repositories from a different origin than Sourcegraph, you must specify a list of repository `%s`s (as displayed on Sourcegraph)' .
+                    'and their corresponding Phabricator `%s`s' .
                     "\n\n" .
-                    'The object is an array with all elements of the type object. The array object has the following properties:' .
+                    'An array of objects, each mapping a Phabricator repository\'s callsign to the corresponding repository on Sourcegraph. Each object contains the following properties:' .
                     "\n\n" .
-                    '`%s` (string, required) Display path for the url e.g. `%s`' .
+                    '`%s` (string, required) The path of the repository on Sourcegraph' .
                     "\n\n" .
-                    '`%s` (string, required) The unique Phabricator identifier for the repository, like `%s.`'
-                    , 'phabricator.repos', 'path', 'my/repo', 'callsign', 'MUX'))
+                    '`%s` (string, required) The Phabricator callsign for the repository'
+                    , 'path', 'callsign' , 'phabricator.repos', 'path', 'callsign'))
                 ->addExample(
-                    $repo_example,
+                    id(new PhutilJSON())->encodeAsList(
+                        array(
+                            array(
+                                'path' => 'gitolite.example.org/foobar',
+                                'callsign' => 'FOO',
+                            ),
+                        )
+                    ),
                     pht('Simple Example')
                 ),
         );
