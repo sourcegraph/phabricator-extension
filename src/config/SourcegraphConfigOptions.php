@@ -35,7 +35,7 @@ final class PhabricatorSourcegraphConfigOptions extends PhabricatorApplicationCo
                 ->addExample('https://sourcegraph.example.com', pht('Valid Setting')),
             $this->newOption('sourcegraph.callsignMappings', $callsign_mapping_type, array())
                 ->setDescription(pht(
-                    'f your Phabricator installation mirrors repositories from a different origin than Sourcegraph, you must specify a list of repository `%s`s (as displayed on Sourcegraph)' .
+                    'If your Phabricator installation mirrors repositories from a different origin than Sourcegraph, you must specify a list of repository `%s`s (as displayed on Sourcegraph)' .
                     'and their corresponding Phabricator `%s`s' .
                     "\n\n" .
                     'An array of objects, each mapping a Phabricator repository\'s callsign to the corresponding repository on Sourcegraph. Each object contains the following properties:' .
