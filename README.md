@@ -4,7 +4,7 @@ Sourcegraph's Phabricator integration adds Sourcegraph code intelligence and sea
 
 Check out our [docs site](https://about.sourcegraph.com/docs/features/phabricator-extension) for more information.
 
-## [Installation](https://https://about.sourcegraph.com/docs/features/phabricator-extension#option-a-single-installation-script)
+## [Installation](https://about.sourcegraph.com/docs/features/phabricator-extension/#production-installation-for-all-users-of-the-phabricator-instance)
 
 1. Clone this repository to `phabricator/src/extensions/sourcegraph` (inside your Phabricator installation directory).
 
