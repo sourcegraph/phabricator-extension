@@ -35,4 +35,13 @@ final class SourcegraphCallsignMappingConfigType extends PhabricatorConfigJSONOp
             }
         }
     }
+
+    public function validateStoredValue(PhabricatorConfigOption $option, $value) {
+        return validateOption($option, $value);
+    }
+
+    final public function getTypeKey()
+    {
+        return $this->getPhobjectClassConstant('TYPEKEY');
+    }
 }
