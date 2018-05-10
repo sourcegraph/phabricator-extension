@@ -30,9 +30,12 @@ final class SourcegraphApplication extends PhabricatorApplication
 
         // In order to load the Sourcegraph Phabricator bundle and to fetch content from a Sourcegraph Server
         // instance, the CSP policy must include the Sourcegraph Server instance url.
+        $resource = new CelerityStaticResourceResponse();
+        if (method_exists($resource, 'addContentSecurityPolicyURI') && is_callable(array($resource, 'addContentSecurityPolicyURI'))) {
         CelerityAPI::getStaticResourceResponse()
             ->addContentSecurityPolicyURI('connect-src', $url)
             ->addContentSecurityPolicyURI('script-src', $url);
+        }
 
         Javelin::initBehavior('sourcegraph-config', array(
             'bundleUrl' => $bundleUrl,

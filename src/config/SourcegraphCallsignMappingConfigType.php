@@ -1,13 +1,12 @@
 <?php
 
-final class SourcegraphCallsignMappingConfigType extends PhabricatorJSONConfigType
+final class SourcegraphCallsignMappingConfigType extends PhabricatorConfigJSONOptionType
 {
 
     const TYPEKEY = 'sourcegraph.callsignMapping';
 
-    public function validateStoredValue(
-        PhabricatorConfigOption $option,
-        $value) {
+    public function validateOption(PhabricatorConfigOption $option, $value)
+    {
         foreach ($value as $index => $spec) {
             if (!is_array($spec)) {
                 throw $this->newException(
@@ -20,19 +19,19 @@ final class SourcegraphCallsignMappingConfigType extends PhabricatorJSONConfigTy
         }
         foreach ($value as $index => $spec) {
             try {
-              PhutilTypeSpec::checkMap(
-                $spec,
-                array(
-                  'callsign' => 'string',
-                  'path' => 'string',
-                ));
+                PhutilTypeSpec::checkMap(
+                    $spec,
+                    array(
+                        'callsign' => 'string',
+                        'path' => 'string',
+                    ));
             } catch (Exception $ex) {
-              throw $this->newException(
-                pht(
-                  'Sourcegraph callsign mapping configuration has an invalid mapping '.
-                  'specification (at index "%s"): %s.',
-                  $index,
-                  $ex->getMessage()));
+                throw $this->newException(
+                    pht(
+                        'Sourcegraph callsign mapping configuration has an invalid mapping ' .
+                        'specification (at index "%s"): %s.',
+                        $index,
+                        $ex->getMessage()));
             }
         }
     }

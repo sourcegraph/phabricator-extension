@@ -24,7 +24,7 @@ final class PhabricatorSourcegraphConfigOptions extends PhabricatorApplicationCo
 
     public function getOptions()
     {
-        $callsign_mapping_type = 'sourcegraph.callsignMapping';
+        $callsign_mapping_type = 'custom:SourcegraphCallsignMappingConfigType';
 
         return array(
             $this->newOption(
