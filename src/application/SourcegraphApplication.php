@@ -20,6 +20,11 @@ final class SourcegraphApplication extends PhabricatorApplication
 
     public function __construct()
     {
+        $enabled = PhabricatorEnv::getEnvConfig('sourcegraph.enabled');
+        if (!$enabled) {
+            return;
+        }
+
         $url = PhabricatorEnv::getEnvConfig('sourcegraph.url');
         if (!isset($url) || trim($url) === '') {
             return;
@@ -32,15 +37,15 @@ final class SourcegraphApplication extends PhabricatorApplication
         // instance, the CSP policy must include the Sourcegraph Server instance url.
         $resource = new CelerityStaticResourceResponse();
         if (method_exists($resource, 'addContentSecurityPolicyURI') && is_callable(array($resource, 'addContentSecurityPolicyURI'))) {
-        CelerityAPI::getStaticResourceResponse()
-            ->addContentSecurityPolicyURI('connect-src', $url)
-            ->addContentSecurityPolicyURI('script-src', $url);
+            CelerityAPI::getStaticResourceResponse()
+                ->addContentSecurityPolicyURI('connect-src', $url)
+                ->addContentSecurityPolicyURI('script-src', $url);
         }
 
         Javelin::initBehavior('sourcegraph-config', array(
             'bundleUrl' => $bundleUrl,
             'url' => $url,
-            'callsignMappings' => $callsignMappings
+            'callsignMappings' => $callsignMappings,
         ), 'sourcegraph');
         require_celerity_resource('sourcegraph', 'sourcegraph');
     }
