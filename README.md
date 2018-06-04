@@ -7,7 +7,7 @@ Sourcegraph's Phabricator integration adds Sourcegraph code intelligence and sea
 1. Clone this repository to `phabricator/src/extensions/sourcegraph` (inside your Phabricator installation directory). See [Phabricator's adding new classes and extensions docs](https://secure.phabricator.com/book/phabcontrib/article/adding_new_classes/) for more information.
 
 ```
-git clone -b release-v1.0 https://github.com/sourcegraph/phabricator-extension.git phabricator/src/extensions/sourcegraph
+git clone -b release-v1.1 https://github.com/sourcegraph/phabricator-extension.git phabricator/src/extensions/sourcegraph
 ```
 
 2. Run `bin/celerity map` to [add the static CSS/JS assets](https://secure.phabricator.com/book/phabcontrib/article/adding_new_css_and_js/).
