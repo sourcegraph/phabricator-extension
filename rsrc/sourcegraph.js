@@ -5,6 +5,14 @@
 window.SOURCEGRAPH_PHABRICATOR_EXTENSION = true;
 
 /**
+ * To prevent loading the extension for all users, specifify a user whitelist
+ * by changing this line to `var userWhitelist = { "username": true, ... };`
+ */
+var userWhitelist = undefined;
+
+var sourcegraphURL = window.SOURCEGRAPH_URL || window.localStorage.SOURCEGRAPH_URL
+
+/**
  * Scrapes a Phabricator username from the DOM.
  */
 function getPhabricatorUsername() {
@@ -28,6 +36,17 @@ function getPhabricatorUsername() {
   return null;
 }
 
+function injectIAPHandler() {
+  let iapRefresher = document.getElementById('sourcegraph-iap-refresh');
+  if (!iapRefresher) {
+    iapRefresher = document.createElement('iframe');
+    iapRefresher.style = 'width:0;height:0;border:0; border:none;';
+    iapRefresher.id = 'sourcegraph-iap-refresh';
+    iapRefresher.src = `${sourcegraphURL}/_gcp_iap/session_refresher`;
+    document.body.appendChild(iapRefresher);
+  }
+}
+
 function inject() {
   if (document.readyState === 'complete' || document.readyState === 'interactive') {
     load();
@@ -36,15 +55,11 @@ function inject() {
   }
 }
 
-/**
- * To prevent loading the extension for all users, specifify a user whitelist
- * by changing this line to `var userWhitelist = { "username": true, ... };`
- */
-var userWhitelist = undefined;
-
-var sourcegraphURL = window.SOURCEGRAPH_URL || window.localStorage.SOURCEGRAPH_URL
-
 function load() {
+  if (window.ENABLE_IAP || window.localStorage.ENABLE_IAP) {
+    injectIAPHandler();
+  }
+
   var script = document.createElement('script');
   script.type = 'text/javascript';
   script.defer = true;

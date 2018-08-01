@@ -3,9 +3,10 @@
  */
 
 JX.behavior('sourcegraph-config', function(config) {
-	if (config.url) {
-			window.SOURCEGRAPH_URL = config.url;
-			window.localStorage.SOURCEGRAPH_URL = config.url;
+	const url = config.url
+	if (url) {
+		window.SOURCEGRAPH_URL = url;
+		window.localStorage.SOURCEGRAPH_URL = url;
 	}
 	if (config.bundleUrl) {
 			window.SOURCEGRAPH_BUNDLE_URL = config.bundleUrl;
@@ -15,8 +16,6 @@ JX.behavior('sourcegraph-config', function(config) {
 		window.PHABRICATOR_CALLSIGN_MAPPINGS = JSON.stringify(config.callsignMappings);
 		window.localStorage.PHABRICATOR_CALLSIGN_MAPPINGS = JSON.stringify(config.callsignMappings);
 	}
-	console.log(`config`, config);
-	if (config.enableIAP) {
-		console.log(`enableIAP`, config.enableIAP);
-	}
+	window.ENABLE_IAP = config.enableIAP
+	window.localStorage.ENABLE_IAP = config.enableIAP
 });
