@@ -24,6 +24,7 @@ final class SourcegraphApplication extends PhabricatorApplication
         if (!$enabled) {
             return;
         }
+        $enableIAP = PhabricatorEnv::getEnvConfig('sourcegraph.enableIAP');
 
         $url = PhabricatorEnv::getEnvConfig('sourcegraph.url');
         if (!isset($url) || trim($url) === '') {
@@ -46,6 +47,7 @@ final class SourcegraphApplication extends PhabricatorApplication
             'bundleUrl' => $bundleUrl,
             'url' => $url,
             'callsignMappings' => $callsignMappings,
+            'enableIAP' => $enableIAP,
         ), 'sourcegraph');
         require_celerity_resource('sourcegraph', 'sourcegraph');
     }

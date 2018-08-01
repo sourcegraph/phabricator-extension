@@ -58,6 +58,8 @@ final class PhabricatorSourcegraphConfigOptions extends PhabricatorApplicationCo
             $this->newOption('sourcegraph.enabled', 'bool', true)
                 ->setDescription(pht('
                 Sourcegraph\'s Phabricator integration adds Sourcegraph code intelligence and search to Phabricator diffs and code files, so you get go-to-definition, find-references, hover tooltips, and code search embedded natively into Phabricator.')),
+            $this->newOption('sourcegraph.enableIAP', 'bool', false)
+                ->setDescription(pht('Cloud Identity-Aware Proxy (Cloud IAP) controls access to your cloud applications running on Google Cloud Platform. If your Sourcegraph Server is relies on Cloud IAP set this setting enabled.')),
         );
     }
 }

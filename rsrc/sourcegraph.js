@@ -28,6 +28,14 @@ function getPhabricatorUsername() {
   return null;
 }
 
+function inject() {
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    load();
+  } else {
+    document.addEventListener('DOMContentLoaded', load);
+  }
+}
+
 /**
  * To prevent loading the extension for all users, specifify a user whitelist
  * by changing this line to `var userWhitelist = { "username": true, ... };`
@@ -49,12 +57,8 @@ if (userWhitelist) {
   // Load the extension iff the current user is on the whitelist.
   var username = getPhabricatorUsername();
   if (username && userWhitelist[username]) {
-    load();
+    inject();
   }
 } else {
-  if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    load();
-  } else {
-    document.addEventListener('DOMContentLoaded', load);
-  }
+  inject();
 }

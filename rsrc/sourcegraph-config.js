@@ -15,4 +15,8 @@ JX.behavior('sourcegraph-config', function(config) {
 		window.PHABRICATOR_CALLSIGN_MAPPINGS = JSON.stringify(config.callsignMappings);
 		window.localStorage.PHABRICATOR_CALLSIGN_MAPPINGS = JSON.stringify(config.callsignMappings);
 	}
+	console.log(`config`, config);
+	if (config.enableIAP) {
+		console.log(`enableIAP`, config.enableIAP);
+	}
 });
