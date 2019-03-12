@@ -2,7 +2,7 @@
 
 Sourcegraph's Phabricator integration adds Sourcegraph code intelligence and search to Phabricator diffs and code files, so you get go-to-definition, find-references, hover tooltips, and code search embedded natively into Phabricator.
 
-## [Installation]
+## Installation
 
 1. Clone this repository to `phabricator/src/extensions/sourcegraph` (inside your Phabricator installation directory). See [Phabricator's adding new classes and extensions docs](https://secure.phabricator.com/book/phabcontrib/article/adding_new_classes/) for more information.
 
