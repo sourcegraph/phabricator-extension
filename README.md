@@ -4,15 +4,28 @@ Sourcegraph's Phabricator integration adds Sourcegraph code intelligence and sea
 
 ## Installation
 
-1. Clone this repository to `phabricator/src/extensions/sourcegraph` (inside your Phabricator installation directory). See [Phabricator's adding new classes and extensions docs](https://secure.phabricator.com/book/phabcontrib/article/adding_new_classes/) for more information.
+1. Navigate to the Phabricator root directory on your Phabricator instance (eg. `/opt/bitnami/phabricator` if you're using the https://github.com/bitnami/bitnami-docker-phabricator).
+2. Clone this repository to `src/extensions/sourcegraph`:
 
 ```
-git clone -b release-v1.2 https://github.com/sourcegraph/phabricator-extension.git phabricator/src/extensions/sourcegraph
+git clone -b release-v1.2 https://github.com/sourcegraph/phabricator-extension.git src/extensions/sourcegraph
 ```
+3. Run `bin/celerity map` to [add the static CSS/JS assets](https://secure.phabricator.com/book/phabcontrib/article/adding_new_css_and_js/).
+4. [Restart Phabricator](https://secure.phabricator.com/book/phabricator/article/restarting/).
 
-2. Navigate to the Phabricator root directory and run `bin/celerity map` to [add the static CSS/JS assets](https://secure.phabricator.com/book/phabcontrib/article/adding_new_css_and_js/).
+## Upgrade
 
-3. [Restart Phabricator](https://secure.phabricator.com/book/phabricator/article/restarting/).
+To upgrade from an older version of the Phabricator integration:
+
+1. Navigate to the Phabricator root directory on your Phabricator instance.
+2. Use `git pull` to upgrade the Sourcegraph integration:
+
+```
+pushd src/extensions/sourcegraph && git pull origin release-v1.2 && popd
+```
+3. Run `bin/celerity map` to [add the static CSS/JS assets](https://secure.phabricator.com/book/phabcontrib/article/adding_new_css_and_js/).
+4. [Restart Phabricator](https://secure.phabricator.com/book/phabricator/article/restarting/).
+
 
 ## Quickstart
 
@@ -42,7 +55,7 @@ For example:
 'https://sourcegraph.example.com'
 ```
 
-### `sourcegraph.repos` (array)
+### `sourcegraph.callsignMappings` (array)
 
 If your Phabricator installation mirrors repositories from a different origin than Sourcegraph, you must specify a list of repository `paths`s (as displayed on Sourcegraph)
 and their corresponding Phabricator `callsign`s.

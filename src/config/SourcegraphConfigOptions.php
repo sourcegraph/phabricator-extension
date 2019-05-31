@@ -43,7 +43,7 @@ final class PhabricatorSourcegraphConfigOptions extends PhabricatorApplicationCo
                     '`%s` (string, required) The path of the repository on Sourcegraph' .
                     "\n\n" .
                     '`%s` (string, required) The Phabricator callsign for the repository'
-                    , 'path', 'callsign', 'phabricator.repos', 'path', 'callsign'))
+                    , 'path', 'callsign', 'path', 'callsign'))
                 ->addExample(
                     id(new PhutilJSON())->encodeAsList(
                         array(
