@@ -55,7 +55,7 @@ For example:
 'https://sourcegraph.example.com'
 ```
 
-### `sourcegraph.callsignMappings` (array)
+### <a name="callsign-mappings"></a>`sourcegraph.callsignMappings` (array)
 
 If your Phabricator installation mirrors repositories from a different origin than Sourcegraph, you must specify a list of repository `paths`s (as displayed on Sourcegraph)
 and their corresponding Phabricator `callsign`s.
@@ -93,6 +93,40 @@ docs](https://secure.phabricator.com/book/phabricator/article/restarting/) for m
 * [Phabricator](https://github.com/phacility/phabricator) stable builds after January 2017
 * [Bitnami](https://github.com/bitnami/bitnami-docker-phabricator) Docker tags after 2017.09-r1
 * [RedpointGames](https://github.com/RedpointGames/phabricator) Docker images
+
+## Usage
+
+### Native code intelligence
+
+Once configured, the Sourcegraph Phabricator integration will add code intelligence hovers to Diffusion code view and Differential diffs for all users that are logged in to your self-hosted Sourcegraph instance. It will also add links to view repositories, files and diffs on Sourcegraph.
+
+<img src="img/code_intelligence.png" alt="Code intelligence" width="400px"/>
+
+If a user is not logged in to Sourcegraph, they will still see "Sign in to Sourcegraph" links, and code intelligence hovers will not be displayed.
+
+<img src="img/sign_in_to_sourcegraph.png" alt="Sign in to Sourcegraph" width="400px"/>
+
+## Troubleshooting
+
+If you're not seeing code intelligence hover tooltips on Phabricator, relevant errors will most frequently be shown in the browser console of your Phabricator instance. Some of the most frequent errors are listed below.
+
+### CORS error in browser console
+
+If `corsOrigin` is not properly configured in your Sourcegraph instance's site configuration, the following error will be shown in the browser console:
+
+```
+Access to fetch at 'https://sourcegraph.test:3443/.assets/extension/css/style.bundle.css?v=0.0.0' from origin 'https://phabricator.test' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+```
+
+See the [quickstart](#quickstart) section to configure `corsOrigin`.
+
+### RepoNotFoundError in browser console
+
+If the Phabricator integration fails to resolve a repository, a `RepoNotFoundError` will be logged to the browser console. This may indicate that your [callsign mappings](#callsign-mappings) are misconfigured, or that the repository you're viewing is not synced to your Sourcegraph instance.
+
+```
+Could not resolve file info for code view RepoNotFoundError: repo gitolite.example.org/sourcegraph/jsonrpc2 not found
+```
 
 ## Known issues
 
