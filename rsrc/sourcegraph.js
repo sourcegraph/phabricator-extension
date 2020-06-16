@@ -29,10 +29,10 @@ function getPhabricatorUsername() {
 }
 
 /**
- * To prevent loading the extension for all users, specifify a user whitelist
- * by changing this line to `var userWhitelist = { "username": true, ... };`
+ * To prevent loading the extension for all users, specifify a user allowlist
+ * by changing this line to `var userAllowlist = { "username": true, ... };`
  */
-var userWhitelist = undefined;
+var userAllowlist = undefined;
 
 var sourcegraphURL = window.SOURCEGRAPH_URL || window.localStorage.SOURCEGRAPH_URL
 
@@ -45,10 +45,10 @@ function load() {
   document.getElementsByTagName('head')[0].appendChild(script);
 }
 
-if (userWhitelist) {
-  // Load the extension iff the current user is on the whitelist.
+if (userAllowlist) {
+  // Load the extension iff the current user is on the allowlist.
   var username = getPhabricatorUsername();
-  if (username && userWhitelist[username]) {
+  if (username && userAllowlist[username]) {
     load();
   }
 } else {
